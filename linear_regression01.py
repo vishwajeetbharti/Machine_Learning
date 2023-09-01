@@ -4,6 +4,7 @@ from sklearn import linear_model #Scipy provides low-level mathematical and scie
 
 
 canada_income = pd.read_csv('canada_per_capita_income.csv')
+predict_data =  pd.read_csv('predict_capital_income.csv')
 df = pd.DataFrame(canada_income)
 
 plt.scatter(df.year,df.per_capita_income_US,color='red',marker= '+')
@@ -15,7 +16,9 @@ reg.fit(df[['year']],df.per_capita_income_US)  #y = mX+b m is slope(or Gradient)
 #value = reg.coef_ # 
 # value1 = reg.intercept_
 value2 = reg.predict([[2022]])
-print(value2)
- 
+#print(value2)
+d = reg.predict(predict_data)
+predict_data['per_capita_income_US'] = d
+predict_data.to_csv('prediction01.csv')
 plt.plot(df.year,reg.predict(df[['year']]),color = 'blue')
 plt.show()
